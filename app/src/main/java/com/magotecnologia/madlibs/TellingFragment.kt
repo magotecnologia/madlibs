@@ -40,7 +40,7 @@ class TellingFragment : Fragment() {
         val scan = Scanner(resources.openRawResource(location))
         var actualWordToReplace = 0
 
-        val strBuilder = StringBuilder();
+        val strBuilder = StringBuilder()
 
         while (scan.hasNextLine()) {
             val tagStringRegex = "<[^>]+>"
@@ -48,17 +48,17 @@ class TellingFragment : Fragment() {
             var foundLine = scan.nextLine()
             val line = regex.findAll(foundLine)
             val replaced = line.toList().flatMap { it.groups }.mapNotNull { it?.range }
+            val modifiedLine = StringBuilder()
             var actualBleed = 0
             for (replaceRange in replaced) {
-                foundLine = foundLine.replaceRange(
-                    replaceRange.first + actualBleed,
-                    replaceRange.last + 1 + actualBleed,
-                    args.words[actualWordToReplace]
-                )
+                val beforeThisRange = foundLine.substring(0, replaceRange.first - actualBleed)
+                val afterThisRange = foundLine.substring(replaceRange.last + 1 - actualBleed)
+                foundLine = afterThisRange
+                modifiedLine.append(beforeThisRange).append(args.words[actualWordToReplace])
                 actualWordToReplace++
-                actualBleed + 2
+                actualBleed += replaceRange.last + 1
             }
-            strBuilder.appendln(foundLine)
+            strBuilder.appendln(modifiedLine.toString())
         }
         scan.close()
         return strBuilder.toString()
