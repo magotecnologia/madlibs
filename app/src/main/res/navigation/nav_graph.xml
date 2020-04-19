@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/selectionFragment">
+
+    <fragment
+        android:id="@+id/selectionFragment"
+        android:name="com.magotecnologia.madlibs.SelectionFragment"
+        android:label="fragment_selection"
+        tools:layout="@layout/fragment_selection">
+        <action
+            android:id="@+id/action_selectionFragment_to_inputDataFragment"
+            app:destination="@id/inputDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputDataFragment"
+        android:name="com.magotecnologia.madlibs.InputDataFragment"
+        android:label="fragment_input_data"
+        tools:layout="@layout/fragment_input_data">
+        <action
+            android:id="@+id/action_inputDataFragment_to_tellingFragment"
+            app:destination="@id/tellingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tellingFragment"
+        android:name="com.magotecnologia.madlibs.TellingFragment"
+        android:label="fragment_telling"
+        tools:layout="@layout/fragment_telling" />
+</navigation>
