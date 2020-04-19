@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_inputDataFragment_to_tellingFragment"
             app:destination="@id/tellingFragment" />
+        <argument
+            android:name="selectedStory"
+            app:argType="com.magotecnologia.madlibs.Story" />
     </fragment>
     <fragment
         android:id="@+id/tellingFragment"
