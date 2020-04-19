@@ -30,5 +30,12 @@
         android:id="@+id/tellingFragment"
         android:name="com.magotecnologia.madlibs.TellingFragment"
         android:label="fragment_telling"
-        tools:layout="@layout/fragment_telling" />
+        tools:layout="@layout/fragment_telling">
+        <argument
+            android:name="words"
+            app:argType="string[]" />
+        <argument
+            android:name="story"
+            app:argType="com.magotecnologia.madlibs.Story" />
+    </fragment>
 </navigation>

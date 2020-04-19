@@ -1,14 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".InputDataFragment">
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/tx_instruction_fill"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:text="@string/please_fill" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tx_number_remaining_words"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tx_remaining_words"
+        app:layout_constraintTop_toBottomOf="@id/tx_instruction_fill" />
+
+    <TextView
+        android:id="@+id/tx_remaining_words"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tx_instruction_fill"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tx_number_remaining_words"
+        android:text="@string/please_words" />
+
+    <EditText
+        android:id="@+id/et_input_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="6"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/bt_input_word"
+        app:layout_constraintTop_toBottomOf="@id/tx_number_remaining_words" />
+
+
+    <Button
+        android:id="@+id/bt_input_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/input_word"
+        app:layout_constraintStart_toEndOf="@id/et_input_word"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tx_number_remaining_words" />
+
+    <TextView
+        android:id="@+id/tx_please_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tx_word_type"
+        app:layout_constraintTop_toBottomOf="@id/et_input_word" />
+
+    <TextView
+        android:id="@+id/tx_word_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="viewStart"
+        app:layout_constraintStart_toEndOf="@id/tx_please_type"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_input_word" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

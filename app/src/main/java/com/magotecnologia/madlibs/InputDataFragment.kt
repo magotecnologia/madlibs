@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.magotecnologia.madlibs.databinding.FragmentInputDataBinding
 import java.util.*
@@ -16,8 +18,8 @@ class InputDataFragment : Fragment() {
     private var _binding: FragmentInputDataBinding? = null
     private val binding get() = _binding!!
     private val args: InputDataFragmentArgs by navArgs()
-    private val words = emptyMap<String, String>()
-    private val temporal = mutableListOf<String>()
+    private val dataToFill = mutableListOf<String>()
+    private val savedWords = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +34,35 @@ class InputDataFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val rawName = args.selectedStory.rawName
         getAllFieldsToFill(rawName)
-        temporal.forEach { binding.text.append(it) }
+        binding.txNumberRemainingWords.text = dataToFill.size.toString()
+        binding.etInputWord.hint = dataToFill.first()
+        binding.txWordType.text = dataToFill.first()
+        binding.btInputWord.setOnClickListener {
+            saveWord()
+        }
+    }
+
+    private fun saveWord() {
+        if (binding.etInputWord.text.toString().isNotBlank()) {
+            savedWords.add(binding.etInputWord.text.toString())
+            if (savedWords.size < dataToFill.size) {
+                Toast.makeText(
+                    this.requireContext(),
+                    resources.getString(R.string.input_continue),
+                    Toast.LENGTH_LONG
+                ).show()
+                binding.txNumberRemainingWords.text = (dataToFill.size - savedWords.size).toString()
+                binding.etInputWord.text.clear()
+                binding.etInputWord.hint = dataToFill[savedWords.size]
+                binding.txWordType.text = dataToFill[savedWords.size]
+
+            } else {
+                val action = InputDataFragmentDirections.actionInputDataFragmentToTellingFragment(
+                    savedWords.toTypedArray(), args.selectedStory
+                )
+                this.findNavController().navigate(action)
+            }
+        }
     }
 
     private fun getAllFieldsToFill(rawName: String) {
@@ -49,12 +79,13 @@ class InputDataFragment : Fragment() {
                 .map { it?.value }
                 .forEach {
                     it?.let { foundString ->
-                        temporal.add(
+                        dataToFill.add(
                             foundString.removePrefix("<").removeSuffix(">")
                         )
                     }
                 }
         }
+        scan.close()
     }
 
     override fun onDestroyView() {
